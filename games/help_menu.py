@@ -145,6 +145,41 @@ class HelpMenu:
                 'Score is based on how few wrong guesses you make',
                 'Think of common programming/computer terms',
             ]
+        },
+        'tictactoe': {
+            'title': 'Tic-Tac-Toe - Help',
+            'description': 'Classic 3x3 game. Get three in a row to win!',
+            'controls': [
+                ('Arrow Keys', 'Move cursor'),
+                ('Space/Enter', 'Place mark'),
+                ('M', 'Toggle AI/2-player mode'),
+                ('P', 'Pause/Unpause'),
+                ('Q', 'Quit to menu'),
+            ],
+            'tips': [
+                'Control the center square for better positioning',
+                'Try to create two winning paths at once',
+                'Block your opponent\'s winning moves',
+                'Corner squares are strategically important',
+            ]
+        },
+        'wordle': {
+            'title': 'Wordle - Help',
+            'description': 'Guess the 5-letter word in 6 tries!',
+            'controls': [
+                ('A-Z', 'Type letters'),
+                ('Enter', 'Submit guess'),
+                ('Backspace', 'Delete letter'),
+                ('Q', 'Quit to menu'),
+            ],
+            'tips': [
+                '[X] means correct letter in correct position',
+                ' X  means correct letter in wrong position',
+                '·X· means letter is not in the word',
+                'Start with words that use common letters',
+                'Use the keyboard to see which letters you\'ve tried',
+                'All words are programming/tech related',
+            ]
         }
     }
     
@@ -177,7 +212,7 @@ class HelpMenu:
     def __init__(self):
         self.current_game = 0
         self.games = ['snake', 'tetris', 'pacman', 'pong', '2048', 'minesweeper', 
-                     'space_invaders', 'breakout', 'hangman', 'general']
+                     'space_invaders', 'breakout', 'hangman', 'tictactoe', 'wordle', 'general']
         self.game_names = {
             'snake': 'Snake',
             'tetris': 'Tetris',
@@ -188,6 +223,8 @@ class HelpMenu:
             'space_invaders': 'Space Invaders',
             'breakout': 'Breakout',
             'hangman': 'Hangman',
+            'tictactoe': 'Tic-Tac-Toe',
+            'wordle': 'Wordle',
             'general': 'General Help'
         }
     

@@ -5,13 +5,30 @@ A collection of classic games playable in the terminal.
 """
 
 import sys
-from games.snake import SnakeGame
+import curses
 from games.menu import GameMenu
+from utils.ui_animations import draw_splash_screen
+
+
+def show_splash(stdscr):
+    """Show animated splash screen."""
+    draw_splash_screen(
+        stdscr,
+        "CLI GAME COLLECTION",
+        "11 Classic Games • Press any key to continue",
+        width=60,
+        height=8
+    )
+    stdscr.getch()
 
 
 def main():
     """Main entry point for the CLI game collection."""
     try:
+        # Show splash screen
+        curses.wrapper(show_splash)
+        
+        # Run menu
         menu = GameMenu()
         menu.run()
     except KeyboardInterrupt:

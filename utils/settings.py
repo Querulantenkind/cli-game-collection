@@ -48,6 +48,22 @@ class SettingsManager:
             'speed': 'medium',
             'difficulty': 'normal',
         },
+        'tictactoe': {
+            'speed': 'medium',
+            'difficulty': 'normal',
+        },
+        'wordle': {
+            'speed': 'medium',
+            'difficulty': 'normal',
+        },
+        'frogger': {
+            'speed': 'medium',
+            'difficulty': 'normal',
+        },
+        'sudoku': {
+            'speed': 'medium',
+            'difficulty': 'normal',
+        },
         'general': {
             'show_high_scores': True,
             'sound_enabled': False,

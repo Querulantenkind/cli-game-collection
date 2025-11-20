@@ -9,6 +9,7 @@ from utils.settings import SettingsManager
 from utils.statistics import StatisticsManager
 from utils.achievements import AchievementManager
 from utils.themes import ThemeManager
+from utils.save_manager import SaveManager
 from utils.terminal import validate_terminal_size, TerminalSizeError, show_terminal_size_error
 
 
@@ -47,6 +48,7 @@ class BaseGame(ABC):
         self.stats = StatisticsManager()
         self.achievements = AchievementManager()
         self.theme_manager = ThemeManager()
+        self.save_manager = SaveManager()
         self.high_score = self.high_score_manager.get_high_score(game_name)
         
         # Load theme from settings
@@ -318,6 +320,66 @@ class BaseGame(ABC):
             pass
         finally:
             self._cleanup_curses()
+    
+    def _serialize_state(self) -> Dict[str, Any]:
+        """Serialize game state for saving.
+        
+        Override this to save custom game state.
+        Base implementation saves basic state.
+        
+        Returns:
+            Dictionary of game state
+        """
+        return {
+            'score': self.score,
+            'game_over': self.game_over,
+            'won': self.won,
+        }
+    
+    def _deserialize_state(self, state: Dict[str, Any]):
+        """Deserialize and restore game state.
+        
+        Override this to load custom game state.
+        Base implementation restores basic state.
+        
+        Args:
+            state: Dictionary of game state
+        """
+        self.score = state.get('score', 0)
+        self.game_over = state.get('game_over', False)
+        self.won = state.get('won', False)
+    
+    def _save_game(self, slot: int = 1) -> bool:
+        """Save current game state.
+        
+        Args:
+            slot: Save slot number (1-5)
+            
+        Returns:
+            True if save was successful
+        """
+        game_state = self._serialize_state()
+        metadata = {
+            'score': self.score,
+            'timestamp': time.time()
+        }
+        return self.save_manager.save_game(self.game_name, slot, game_state, metadata)
+    
+    def _load_game(self, slot: int = 1) -> bool:
+        """Load game state from save.
+        
+        Args:
+            slot: Save slot number (1-5)
+            
+        Returns:
+            True if load was successful
+        """
+        save_data = self.save_manager.load_game(self.game_name, slot)
+        if save_data:
+            game_state = save_data.get('game_state', {})
+            self._deserialize_state(game_state)
+            return True
+        return False
     
     @abstractmethod
     def _draw_game_over(self, is_new_high: bool = False):

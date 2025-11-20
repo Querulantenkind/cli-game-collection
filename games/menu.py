@@ -11,10 +11,16 @@ from games.minesweeper import MinesweeperGame
 from games.space_invaders import SpaceInvadersGame
 from games.breakout import BreakoutGame
 from games.hangman import HangmanGame
+from games.tictactoe import TicTacToeGame
+from games.wordle import WordleGame
+from games.frogger import FroggerGame
+from games.sudoku import SudokuGame
 from games.settings_menu import SettingsMenu
 from games.help_menu import HelpMenu
 from games.statistics_menu import StatisticsMenu
 from games.achievements_menu import AchievementsMenu
+from games.load_menu import LoadMenu
+from games.challenges_menu import ChallengesMenu
 
 
 class GameMenu:
@@ -31,8 +37,14 @@ class GameMenu:
             ("Space Invaders", self._run_space_invaders),
             ("Breakout", self._run_breakout),
             ("Hangman", self._run_hangman),
+            ("Tic-Tac-Toe", self._run_tictactoe),
+            ("Wordle", self._run_wordle),
+            ("Frogger", self._run_frogger),
+            ("Sudoku", self._run_sudoku),
+            ("Load Game", self._run_load_game),
             ("Settings", self._run_settings),
             ("Statistics", self._run_statistics),
+            ("Daily Challenges", self._run_challenges),
             ("Achievements", self._run_achievements),
             ("Help", self._run_help),
             ("Exit", None),
@@ -84,6 +96,56 @@ class GameMenu:
         game = HangmanGame()
         game.run()
     
+    def _run_tictactoe(self):
+        """Run the Tic-Tac-Toe game."""
+        game = TicTacToeGame()
+        game.run()
+    
+    def _run_wordle(self):
+        """Run the Wordle game."""
+        game = WordleGame()
+        game.run()
+    
+    def _run_frogger(self):
+        """Run the Frogger game."""
+        game = FroggerGame()
+        game.run()
+    
+    def _run_sudoku(self):
+        """Run the Sudoku game."""
+        game = SudokuGame()
+        game.run()
+    
+    def _run_load_game(self):
+        """Run the load game menu."""
+        load_menu = LoadMenu()
+        result = load_menu.run()
+        
+        if result:
+            game_name, slot = result
+            # Load and run the game
+            game_classes = {
+                'snake': SnakeGame,
+                'tetris': TetrisGame,
+                'pacman': PacManGame,
+                'pong': PongGame,
+                '2048': Game2048,
+                'minesweeper': MinesweeperGame,
+                'space_invaders': SpaceInvadersGame,
+                'breakout': BreakoutGame,
+                'hangman': HangmanGame,
+                'tictactoe': TicTacToeGame,
+                'wordle': WordleGame,
+                'frogger': FroggerGame,
+                'sudoku': SudokuGame,
+            }
+            
+            game_class = game_classes.get(game_name)
+            if game_class:
+                game = game_class()
+                if game._load_game(slot):
+                    game.run()
+    
     def _run_settings(self):
         """Run the Settings menu."""
         settings = SettingsMenu()
@@ -93,6 +155,11 @@ class GameMenu:
         """Run the Statistics menu."""
         stats = StatisticsMenu()
         stats.run()
+    
+    def _run_challenges(self):
+        """Run the Daily Challenges menu."""
+        challenges_menu = ChallengesMenu()
+        challenges_menu.run()
     
     def _run_achievements(self):
         """Run the Achievements menu."""

@@ -231,15 +231,73 @@ class AchievementManager:
             AchievementCategory.PERFECT, 30
         )
         
+        # Tic-Tac-Toe achievements
+        achievements['tictactoe_win'] = Achievement(
+            'tictactoe_win', 'Tic-Tac-Toe Winner', 'Win a game of Tic-Tac-Toe',
+            lambda s: s.get('game') == 'tictactoe' and s.get('won', False),
+            AchievementCategory.FIRST, 15
+        )
+        achievements['tictactoe_3moves'] = Achievement(
+            'tictactoe_3moves', 'Quick Victory', 'Win Tic-Tac-Toe in 3 moves',
+            lambda s: (s.get('game') == 'tictactoe' and s.get('won', False) and
+                      s.get('moves', 99) <= 5),  # 3 player moves = 5 total (X-O-X-O-X)
+            AchievementCategory.PERFECT, 25
+        )
+        
+        # Wordle achievements
+        achievements['wordle_win'] = Achievement(
+            'wordle_win', 'Word Master', 'Win a game of Wordle',
+            lambda s: s.get('game') == 'wordle' and s.get('won', False),
+            AchievementCategory.FIRST, 15
+        )
+        achievements['wordle_1guess'] = Achievement(
+            'wordle_1guess', 'Lucky Guess', 'Win Wordle in 1 guess',
+            lambda s: (s.get('game') == 'wordle' and s.get('won', False) and
+                      s.get('guesses_used', 6) == 1),
+            AchievementCategory.PERFECT, 50
+        )
+        achievements['wordle_3guesses'] = Achievement(
+            'wordle_3guesses', 'Word Expert', 'Win Wordle in 3 guesses or less',
+            lambda s: (s.get('game') == 'wordle' and s.get('won', False) and
+                      s.get('guesses_used', 6) <= 3),
+            AchievementCategory.MASTERY, 30
+        )
+        
+        # Sudoku achievements
+        achievements['sudoku_win'] = Achievement(
+            'sudoku_win', 'Sudoku Solver', 'Complete a Sudoku puzzle',
+            lambda s: s.get('game') == 'sudoku' and s.get('won', False),
+            AchievementCategory.FIRST, 20
+        )
+        achievements['sudoku_perfect'] = Achievement(
+            'sudoku_perfect', 'Perfect Logic', 'Complete Sudoku with no mistakes',
+            lambda s: (s.get('game') == 'sudoku' and s.get('won', False) and
+                      s.get('mistakes', 3) == 0),
+            AchievementCategory.PERFECT, 40
+        )
+        achievements['sudoku_no_hints'] = Achievement(
+            'sudoku_no_hints', 'Pure Solver', 'Complete Sudoku without using hints',
+            lambda s: (s.get('game') == 'sudoku' and s.get('won', False) and
+                      s.get('hints_used', 3) == 0),
+            AchievementCategory.MASTERY, 35
+        )
+        
+        # Frogger achievements
+        achievements['frogger_level_5'] = Achievement(
+            'frogger_level_5', 'Frog Master', 'Reach level 5 in Frogger',
+            lambda s: s.get('game') == 'frogger' and s.get('level', 0) >= 5,
+            AchievementCategory.MASTERY, 25
+        )
+        
         # Collection achievements (checked separately via stats)
         achievements['play_all'] = Achievement(
             'play_all', 'Game Explorer', 'Play all games at least once',
-            lambda s: s.get('games_played_count', 0) >= 9,
+            lambda s: s.get('games_played_count', 0) >= 13,  # Updated for new games
             AchievementCategory.COLLECTION, 50
         )
         achievements['win_all'] = Achievement(
             'win_all', 'Master Gamer', 'Win all games at least once',
-            lambda s: s.get('games_won_count', 0) >= 9,
+            lambda s: s.get('games_won_count', 0) >= 13,  # Updated for new games
             AchievementCategory.COLLECTION, 100
         )
         achievements['first_high_score'] = Achievement(

@@ -12,7 +12,7 @@ class SettingsMenu:
         self.current_category = 0
         self.current_setting = 0
         self.categories = ['snake', 'tetris', 'pacman', 'pong', '2048', 'minesweeper',
-                          'space_invaders', 'breakout', 'hangman', 'general']
+                          'space_invaders', 'breakout', 'hangman', 'tictactoe', 'wordle', 'general']
         self.category_names = {
             'snake': 'Snake',
             'tetris': 'Tetris',
@@ -23,6 +23,8 @@ class SettingsMenu:
             'space_invaders': 'Space Invaders',
             'breakout': 'Breakout',
             'hangman': 'Hangman',
+            'tictactoe': 'Tic-Tac-Toe',
+            'wordle': 'Wordle',
             'general': 'General'
         }
         self.setting_options = {

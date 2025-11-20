@@ -12,7 +12,7 @@ class StatisticsMenu:
         self.stats_manager = StatisticsManager()
         self.current_view = 0  # 0 = overview, 1+ = game stats
         self.games = ['snake', 'tetris', 'pacman', 'pong', '2048', 'minesweeper',
-                     'space_invaders', 'breakout', 'hangman']
+                     'space_invaders', 'breakout', 'hangman', 'tictactoe', 'wordle']
         self.game_names = {
             'snake': 'Snake',
             'tetris': 'Tetris',
@@ -22,7 +22,9 @@ class StatisticsMenu:
             'minesweeper': 'Minesweeper',
             'space_invaders': 'Space Invaders',
             'breakout': 'Breakout',
-            'hangman': 'Hangman'
+            'hangman': 'Hangman',
+            'tictactoe': 'Tic-Tac-Toe',
+            'wordle': 'Wordle'
         }
     
     def run(self):
@@ -132,22 +134,83 @@ class StatisticsMenu:
         stdscr.addstr(2, title_x, title, curses.A_BOLD)
         
         y = 5
+        x_left = 5
+        x_right = width // 2 + 5
         
-        # Statistics
+        # Left column - Basic stats
+        stdscr.addstr(y, x_left, "Basic Stats:", curses.A_BOLD)
+        y += 1
+        
         items = [
             ("Games Played", stats.get('games_played', 0)),
             ("Games Won", stats.get('games_won', 0)),
             ("Games Lost", stats.get('games_lost', 0)),
             ("Best Score", stats.get('best_score', 0)),
+            ("Worst Score", stats.get('worst_score', 'N/A')),
             ("Average Score", stats.get('average_score', 0)),
         ]
         
-        draw_info_panel(stdscr, y, 10, items)
+        for label, value in items:
+            stdscr.addstr(y, x_left, f"  {label}: {value}")
+            y += 1
         
         # Play time
         play_time = stats.get('total_play_time', 0)
         time_str = self.stats_manager.format_play_time(play_time)
-        stdscr.addstr(y + len(items) + 1, 10, f"Total Play Time: {time_str}")
+        stdscr.addstr(y, x_left, f"  Play Time: {time_str}")
+        y += 2
+        
+        # Win rate and streaks
+        win_rate = self.stats_manager.get_win_rate(game_key)
+        stdscr.addstr(y, x_left, "Performance:", curses.A_BOLD)
+        y += 1
+        stdscr.addstr(y, x_left, f"  Win Rate: {win_rate:.1f}%")
+        y += 1
+        stdscr.addstr(y, x_left, f"  Current Streak: {stats.get('win_streak', 0)}")
+        y += 1
+        stdscr.addstr(y, x_left, f"  Best Streak: {stats.get('best_win_streak', 0)}")
+        y += 1
+        
+        # Improvement indicator
+        improving = self.stats_manager.is_improving(game_key)
+        if improving:
+            stdscr.addstr(y, x_left, "  Trend: ↗ Improving!", curses.A_BOLD)
+        else:
+            stdscr.addstr(y, x_left, "  Trend: → Stable")
+        
+        # Right column - Score graph and best session
+        y_right = 6
+        score_trend = self.stats_manager.get_score_trend(game_key, 10)
+        
+        if score_trend and any(score_trend):
+            stdscr.addstr(y_right, x_right, "Recent Scores (Last 10):", curses.A_BOLD)
+            y_right += 1
+            
+            # Draw ASCII graph
+            graph = self.stats_manager.get_ascii_graph(score_trend, width=20, height=8)
+            for line in graph:
+                stdscr.addstr(y_right, x_right, line)
+                y_right += 1
+            
+            # Show score scale
+            max_score = max(score_trend)
+            min_score = min(score_trend)
+            stdscr.addstr(y_right, x_right, f"Max: {max_score}")
+            y_right += 1
+            stdscr.addstr(y_right, x_right, f"Min: {min_score}")
+            y_right += 2
+        
+        # Best session
+        best_session = self.stats_manager.get_best_session(game_key)
+        if best_session:
+            stdscr.addstr(y_right, x_right, "Best Session:", curses.A_BOLD)
+            y_right += 1
+            stdscr.addstr(y_right, x_right, f"  Score: {best_session['score']}")
+            y_right += 1
+            if best_session.get('won'):
+                stdscr.addstr(y_right, x_right, "  Result: Won", curses.A_BOLD)
+            else:
+                stdscr.addstr(y_right, x_right, "  Result: Lost")
         
         # Instructions
         inst_text = "↑↓: Navigate | Q: Back"

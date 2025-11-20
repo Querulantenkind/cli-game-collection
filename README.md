@@ -13,26 +13,49 @@ A collection of classic games playable directly in your terminal! Built with Pyt
 - **Space Invaders** - Shoot down invading aliens before they reach you!
 - **Breakout** - Break all bricks with the ball and paddle!
 - **Hangman** - Guess the word before the hangman is drawn!
+- **Tic-Tac-Toe** - Classic 3x3 game. Get three in a row to win! Play against AI or a friend.
+- **Wordle** - Guess the 5-letter word in 6 tries! Programming/tech themed words.
+- **Frogger** - Cross the road and river! Avoid cars, ride logs, reach the goals.
+- **Sudoku** - Classic number puzzle! Fill the 9x9 grid with logic.
 
-## Installation
+## 🚀 Quick Start
+
+### Installation
 
 This project uses Python 3 and the built-in `curses` library (available on Unix-like systems).
 
-1. Clone the repository:
+**Prerequisites:**
+- Python 3.6 or higher
+- Unix-like system (Linux, macOS, WSL on Windows)
+- Terminal with minimum 80x24 character size
+
+**Setup:**
+
 ```bash
+# Clone the repository
 git clone <repository-url>
 cd cli-game-collection
-```
 
-2. Make sure you have Python 3 installed:
-```bash
+# Verify Python version
 python3 --version
+
+# Run the game collection
+python3 main.py
+
+# Or use make (recommended)
+make run
 ```
 
-3. Run the game collection:
-```bash
-python3 main.py
-```
+### First Time Setup
+
+The game will automatically create a `data/` directory to store:
+- High scores
+- Game settings
+- Statistics
+- Saved games
+- Achievement progress
+
+No external dependencies required! 🎉
 
 ## How to Play
 
@@ -107,6 +130,25 @@ python3 main.py
 - Words are programming/computer related
 - Press **Q** to quit and return to the menu
 
+### Tic-Tac-Toe
+- Use **Arrow Keys** to move the cursor
+- Press **Space** or **Enter** to place your mark (X)
+- Press **M** to toggle between AI and 2-player mode
+- Get three in a row (horizontal, vertical, or diagonal) to win
+- Press **P** to pause/unpause
+- Press **Q** to quit and return to the menu
+
+### Wordle
+- Type **A-Z** letters to build your guess
+- Press **Enter** to submit when you have 5 letters
+- Press **Backspace** to delete letters
+- **[X]** = Correct letter in correct position
+- **X** = Letter is in the word but wrong position
+- **·X·** = Letter is not in the word
+- You have 6 guesses to find the word
+- All words are programming/tech related
+- Press **Q** to quit and return to the menu
+
 ### Menu Navigation
 - Use **↑** and **↓** arrow keys to navigate
 - Press **Enter** to select a game
@@ -134,23 +176,72 @@ python3 main.py
 - General help for navigation and features
 - Press **Q** to go back from help screens
 
-## Features
+## ✨ Features
 
-- **High Score System** - Your best scores are automatically saved and displayed
-- **Settings Menu** - Customize game speed, difficulty, and other options
-- **Statistics Tracking** - Track games played, wins, play time, and more
-- **Help & Tutorials** - In-game help system with controls and tips for each game
-- **Shared Utilities** - Common UI components and helper functions for consistent experience
-- **Base Game Class** - Reusable foundation for easy game development
-- **Terminal Validation** - Automatic size checking prevents crashes on small terminals
-- **Persistent Data** - High scores, settings, and statistics saved to `data/` directory
-- **Cross-Game Integration** - Settings and high scores work across all games
+### 🎮 Games (13)
+- **Snake** - Classic endless growth game
+- **Tetris** - Block stacking puzzle
+- **Pac-Man** - Maze navigation with ghosts
+- **Pong** - Paddle sports classic
+- **2048** - Number merging puzzle
+- **Minesweeper** - Logic-based mine detection
+- **Space Invaders** - Alien shooter
+- **Breakout** - Brick breaking arcade
+- **Hangman** - Word guessing with programming terms
+- **Tic-Tac-Toe** - Strategy board game with AI
+- **Wordle** - 5-letter word guessing (tech themed)
+- **Frogger** - Lane-crossing challenge
+- **Sudoku** - Number placement puzzle
 
-## Requirements
+### 🏆 Progression Systems
+- **High Scores** - Top 10 scores per game, automatically tracked
+- **Achievements** - 34 achievements across all games with point system
+- **Daily Challenges** - 3 rotating challenges daily with streak tracking
+- **Statistics** - Comprehensive tracking with graphs and trends
+  - Win rates and streaks
+  - Score history and trends
+  - Play time tracking
+  - Session history
 
-- Python 3.6+
-- Unix-like system (Linux, macOS) with curses support
-- Terminal with at least 80x24 characters
+### 💾 Persistence
+- **Save/Load System** - 5 save slots per game
+- **Auto-Save Settings** - Preferences persist between sessions
+- **Statistics Tracking** - Complete game history
+- **Achievement Progress** - Never lose your unlocks
+
+### 🎨 Customization
+- **5 Visual Themes** - Classic, Dark, Neon, Retro, Minimal
+- **Speed Settings** - Slow, Medium, Fast for each game
+- **Difficulty Levels** - Easy, Normal, Hard
+- **UI Animations** - Splash screens, notifications, effects
+
+### 🛠️ Developer Features
+- **BaseGame Architecture** - Reusable game foundation
+- **Manager System** - Centralized state management
+- **Terminal Validation** - Automatic size checking
+- **UI Utilities** - Shared drawing and animation functions
+- **Testing Framework** - Unit tests for core systems
+- **Documentation** - Comprehensive API and developer guides
+
+## 📋 Requirements
+
+- **Python** 3.6 or higher
+- **Operating System** Unix-like system (Linux, macOS, WSL)
+- **Terminal** Minimum 80x24 characters
+- **Dependencies** None! Uses only Python standard library
+
+### Tested On
+- ✅ Linux (Arch, Ubuntu, Debian)
+- ✅ macOS (Terminal.app, iTerm2)
+- ✅ Windows WSL (Ubuntu)
+
+### Terminal Emulators
+- ✅ GNOME Terminal
+- ✅ Konsole
+- ✅ iTerm2
+- ✅ Alacritty
+- ✅ Kitty
+- ⚠️ Windows CMD (not supported - use WSL)
 
 ## Architecture
 
@@ -220,6 +311,159 @@ To add a new game:
 3. Manually initialize managers and handle curses setup
 4. Add to menu as above
 
-## License
+## 📊 Project Structure
+
+```
+cli-game-collection/
+├── main.py                 # Entry point
+├── games/                  # Game implementations
+│   ├── menu.py            # Main menu
+│   ├── snake.py           # Snake game
+│   ├── tetris.py          # Tetris game
+│   ├── ... (11 more games)
+│   ├── settings_menu.py   # Settings interface
+│   ├── statistics_menu.py # Statistics display
+│   ├── help_menu.py       # Help system
+│   ├── achievements_menu.py # Achievements viewer
+│   ├── load_menu.py       # Save/load interface
+│   └── challenges_menu.py # Daily challenges
+├── utils/                  # Shared utilities
+│   ├── base_game.py       # Base game class
+│   ├── high_score.py      # High score manager
+│   ├── settings.py        # Settings manager
+│   ├── statistics.py      # Statistics manager
+│   ├── achievements.py    # Achievement system
+│   ├── themes.py          # Theme manager
+│   ├── save_manager.py    # Save/load system
+│   ├── daily_challenges.py # Daily challenge system
+│   ├── ui_helpers.py      # UI utilities
+│   ├── ui_animations.py   # Animation effects
+│   └── terminal.py        # Terminal validation
+├── tests/                  # Test suite
+│   ├── test_managers.py   # Manager tests
+│   ├── test_games.py      # Game tests
+│   └── run_tests.py       # Test runner
+├── scripts/               # Utility scripts
+│   └── check_quality.py  # Code quality checker
+├── data/                  # Runtime data (auto-created)
+│   ├── high_scores.json
+│   ├── settings.json
+│   ├── statistics.json
+│   ├── achievements.json
+│   ├── daily_challenges.json
+│   └── saves/            # Game save files
+├── README.md             # This file
+├── API.md                # API documentation
+├── DEVELOPER.md          # Developer guide
+├── CONTRIBUTING.md       # Contribution guidelines
+├── CHANGELOG.md          # Version history
+├── ENHANCEMENT_ROADMAP.md # Future features
+├── PROJECT_SUMMARY.md    # Complete overview
+├── Makefile              # Build commands
+└── requirements.txt      # No dependencies!
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+make test
+# or
+python3 tests/run_tests.py
+
+# Check code quality
+python3 scripts/check_quality.py
+
+# Run linting
+make lint
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- Code of conduct
+- Development setup
+- Coding standards
+- Pull request process
+
+### Quick Contribution Guide
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`make test`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## 📚 Documentation
+
+- **[README.md](README.md)** - User guide and getting started (this file)
+- **[API.md](API.md)** - Complete API reference
+- **[DEVELOPER.md](DEVELOPER.md)** - Developer guide for adding games
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and changes
+- **[ENHANCEMENT_ROADMAP.md](ENHANCEMENT_ROADMAP.md)** - Future plans
+
+## 🎯 Roadmap
+
+### Completed ✅
+- [x] Core game collection (13 games)
+- [x] High score system
+- [x] Settings management
+- [x] Statistics tracking
+- [x] Achievement system
+- [x] Theme system
+- [x] Save/load system
+- [x] Daily challenges
+- [x] UI animations
+- [x] Testing framework
+- [x] Complete documentation
+
+### Planned 🚀
+- [ ] More games (Asteroids, Conway's Game of Life, etc.)
+- [ ] Game mode variations (Snake modes, Tetris modes)
+- [ ] Replay system
+- [ ] Tournament mode
+- [ ] Multiplayer networking
+- [ ] Leaderboards
+- [ ] Custom themes
+- [ ] Sound effects (optional)
+
+See [ENHANCEMENT_ROADMAP.md](ENHANCEMENT_ROADMAP.md) for detailed plans.
+
+## ❓ FAQ
+
+**Q: Does this work on Windows?**
+A: Use WSL (Windows Subsystem for Linux) for full compatibility.
+
+**Q: My terminal is too small!**
+A: Resize to at least 80x24. The game will show helpful error messages.
+
+**Q: Where is my data stored?**
+A: All data is in the `./data/` directory in JSON format.
+
+**Q: Can I customize the games?**
+A: Yes! Check [DEVELOPER.md](DEVELOPER.md) for adding games and [CONTRIBUTING.md](CONTRIBUTING.md) for modification guidelines.
+
+**Q: Are there any external dependencies?**
+A: No! Only Python 3.6+ standard library is required.
+
+**Q: How do I reset my high scores?**
+A: Delete `data/high_scores.json` or use the settings menu reset option.
+
+## 📝 License
 
 MIT License - See LICENSE file for details
+
+## 🙏 Acknowledgments
+
+Inspired by classic arcade games and terminal gaming communities.
+
+Built with ❤️ using Python's curses library.
+
+---
+
+**Happy Gaming! 🎮**
+
+For support, issues, or feature requests, please open an issue on GitHub.
