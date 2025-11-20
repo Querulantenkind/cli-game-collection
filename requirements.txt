@@ -1,0 +1,4 @@
+# CLI Game Collection Requirements
+# Note: curses is part of Python's standard library on Unix-like systems
+# No external dependencies required for basic functionality
+
