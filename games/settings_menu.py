@@ -32,6 +32,7 @@ class SettingsMenu:
             'starting_level': list(range(1, 11)),
             'show_high_scores': [True, False],
             'sound_enabled': [True, False],
+            'theme': ['classic', 'dark', 'neon', 'retro', 'minimal'],
         }
     
     def run(self):

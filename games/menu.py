@@ -14,6 +14,7 @@ from games.hangman import HangmanGame
 from games.settings_menu import SettingsMenu
 from games.help_menu import HelpMenu
 from games.statistics_menu import StatisticsMenu
+from games.achievements_menu import AchievementsMenu
 
 
 class GameMenu:
@@ -32,6 +33,7 @@ class GameMenu:
             ("Hangman", self._run_hangman),
             ("Settings", self._run_settings),
             ("Statistics", self._run_statistics),
+            ("Achievements", self._run_achievements),
             ("Help", self._run_help),
             ("Exit", None),
         ]
@@ -91,6 +93,11 @@ class GameMenu:
         """Run the Statistics menu."""
         stats = StatisticsMenu()
         stats.run()
+    
+    def _run_achievements(self):
+        """Run the Achievements menu."""
+        achievements_menu = AchievementsMenu()
+        achievements_menu.run()
     
     def _run_help(self):
         """Run the Help menu."""

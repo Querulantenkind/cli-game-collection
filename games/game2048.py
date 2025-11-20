@@ -2,7 +2,7 @@
 
 import curses
 import random
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Any
 from utils.base_game import BaseGame
 from utils.ui_helpers import draw_game_over_screen
 
@@ -139,12 +139,26 @@ class Game2048(BaseGame):
         
         return False
     
+    def _get_max_tile(self) -> int:
+        """Get the maximum tile value on the board."""
+        max_tile = 0
+        for y in range(self.grid_size):
+            for x in range(self.grid_size):
+                max_tile = max(max_tile, self.grid[y][x])
+        return max_tile
+    
     def _check_win(self):
         """Check if 2048 tile exists."""
         for y in range(self.grid_size):
             for x in range(self.grid_size):
                 if self.grid[y][x] == 2048:
                     self.won = True
+    
+    def _get_game_state(self) -> Dict[str, Any]:
+        """Get game state for achievements."""
+        state = super()._get_game_state()
+        state['max_tile'] = self._get_max_tile()
+        return state
     
     def _handle_input(self, key: int) -> bool:
         """Handle input."""

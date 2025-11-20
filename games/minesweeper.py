@@ -3,7 +3,7 @@
 import curses
 import random
 import time
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Any
 from utils.base_game import BaseGame
 from utils.ui_helpers import draw_game_over_screen
 
@@ -187,6 +187,13 @@ class MinesweeperGame(BaseGame):
             self.stdscr.addstr(inst_y + i, 2, inst)
         
         self.stdscr.refresh()
+    
+    def _get_game_state(self) -> Dict[str, Any]:
+        """Get game state for achievements."""
+        state = super()._get_game_state()
+        if self.start_time:
+            state['time'] = int(time.time() - self.start_time)
+        return state
     
     def _save_results(self) -> bool:
         """Save results - only save if won (time-based score)."""

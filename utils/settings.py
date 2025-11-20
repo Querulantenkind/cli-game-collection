@@ -51,6 +51,7 @@ class SettingsManager:
         'general': {
             'show_high_scores': True,
             'sound_enabled': False,
+            'theme': 'classic',  # classic, dark, neon, retro, minimal
         }
     }
     

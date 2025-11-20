@@ -2,7 +2,7 @@
 
 import curses
 import random
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Dict, Any
 from utils.base_game import BaseGame
 from utils.ui_helpers import draw_game_over_screen
 
@@ -242,6 +242,15 @@ class TetrisGame(BaseGame):
         self._draw_pause_message()
         
         self.stdscr.refresh()
+    
+    def _get_game_state(self) -> Dict[str, Any]:
+        """Get game state for achievements."""
+        state = super()._get_game_state()
+        state.update({
+            'level': self.level,
+            'lines_cleared': self.lines_cleared,
+        })
+        return state
     
     def _save_results(self) -> bool:
         """Save high score with metadata."""

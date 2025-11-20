@@ -2,7 +2,7 @@
 
 import curses
 import random
-from typing import Set
+from typing import Set, Dict, Any
 from utils.base_game import BaseGame
 from utils.ui_helpers import draw_game_over_screen
 
@@ -142,6 +142,12 @@ class HangmanGame(BaseGame):
             self.stdscr.addstr(inst_y + i, (self.width - len(inst)) // 2, inst)
         
         self.stdscr.refresh()
+    
+    def _get_game_state(self) -> Dict[str, Any]:
+        """Get game state for achievements."""
+        state = super()._get_game_state()
+        state['wrong_guesses'] = self.wrong_guesses
+        return state
     
     def _save_results(self) -> bool:
         """Save results - only save if won."""

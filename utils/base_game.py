@@ -3,10 +3,12 @@
 import curses
 import time
 from abc import ABC, abstractmethod
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 from utils.high_score import HighScoreManager
 from utils.settings import SettingsManager
 from utils.statistics import StatisticsManager
+from utils.achievements import AchievementManager
+from utils.themes import ThemeManager
 from utils.terminal import validate_terminal_size, TerminalSizeError, show_terminal_size_error
 
 
@@ -43,7 +45,18 @@ class BaseGame(ABC):
         self.high_score_manager = HighScoreManager()
         self.settings = SettingsManager()
         self.stats = StatisticsManager()
+        self.achievements = AchievementManager()
+        self.theme_manager = ThemeManager()
         self.high_score = self.high_score_manager.get_high_score(game_name)
+        
+        # Load theme from settings
+        theme_id = self.settings.get('general', 'theme', 'classic')
+        self.theme_manager.set_theme(theme_id)
+        self.theme = self.theme_manager.get_current_theme()
+        
+        # Achievement notifications
+        self.pending_achievements = []
+        self.achievement_notification_time = 0
         
         # Curses window (set in run())
         self.stdscr = None
@@ -150,6 +163,77 @@ class BaseGame(ABC):
                 self.stdscr.addstr(1, x, info_text)
                 x += len(info_text) + 3
     
+    def _get_game_state(self) -> Dict[str, Any]:
+        """Get current game state for achievement checking.
+        
+        Override this method to provide game-specific state.
+        
+        Returns:
+            Dictionary of game state
+        """
+        return {
+            'score': self.score,
+            'won': self.won,
+            'game_over': self.game_over,
+        }
+    
+    def _check_achievements(self):
+        """Check for achievements and show notifications."""
+        game_state = self._get_game_state()
+        
+        # Add stats for collection achievements
+        all_stats = self.stats.get_all_stats()
+        games_played = set()
+        games_won = set()
+        for game_name, game_stats in all_stats.get('games', {}).items():
+            if game_stats.get('games_played', 0) > 0:
+                games_played.add(game_name)
+            if game_stats.get('games_won', 0) > 0:
+                games_won.add(game_name)
+        
+        game_state['games_played_count'] = len(games_played)
+        game_state['games_won_count'] = len(games_won)
+        
+        newly_unlocked = self.achievements.check_achievements(self.game_name, game_state)
+        
+        if newly_unlocked:
+            self.pending_achievements.extend(newly_unlocked)
+            self.achievement_notification_time = time.time()
+    
+    def _draw_achievement_notification(self):
+        """Draw achievement unlock notification."""
+        if not self.pending_achievements:
+            return
+        
+        # Show notification for 3 seconds
+        if time.time() - self.achievement_notification_time > 3.0:
+            self.pending_achievements.pop(0)
+            if self.pending_achievements:
+                self.achievement_notification_time = time.time()
+            return
+        
+        achievement_id = self.pending_achievements[0]
+        achievement = self.achievements.get_achievement(achievement_id)
+        
+        if achievement:
+            # Draw notification box
+            lines = [
+                "╔════════════════════════════════╗",
+                "║   ACHIEVEMENT UNLOCKED!   ║",
+                f"║   {achievement.icon} {achievement.name:26} ║",
+                f"║   {achievement.description:28} ║",
+                "╚════════════════════════════════╝"
+            ]
+            
+            box_width = len(lines[0])
+            box_height = len(lines)
+            start_y = self.height // 2 - box_height // 2
+            start_x = (self.width - box_width) // 2
+            
+            for i, line in enumerate(lines):
+                self.stdscr.addstr(start_y + i, start_x, line, 
+                                 curses.A_BOLD | curses.A_REVERSE)
+    
     def _save_results(self) -> bool:
         """Save high score and statistics. Returns True if new high score.
         
@@ -164,6 +248,14 @@ class BaseGame(ABC):
         is_new_high = self.high_score_manager.add_score(self.game_name, self.score)
         if is_new_high:
             self.high_score = self.score
+        
+        # Check achievements with final state
+        game_state = self._get_game_state()
+        game_state['is_new_high'] = is_new_high
+        newly_unlocked = self.achievements.check_achievements(self.game_name, game_state)
+        if newly_unlocked:
+            self.pending_achievements.extend(newly_unlocked)
+            self.achievement_notification_time = time.time()
         
         return is_new_high
     
@@ -199,8 +291,14 @@ class BaseGame(ABC):
                 # Update game
                 self._update_game(delta_time)
                 
+                # Check achievements (only once per frame, not every second)
+                # We'll check at game end instead
+                
                 # Draw game
                 self._draw_game()
+                
+                # Draw achievement notifications
+                self._draw_achievement_notification()
                 
                 # Small sleep to prevent excessive CPU usage
                 time.sleep(0.01)
