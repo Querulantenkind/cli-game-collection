@@ -10,13 +10,13 @@ A comprehensive collection of 13 classic terminal games with modern features inc
 ## 📊 By The Numbers
 
 ```
-Total Games:          13
-Total Achievements:   34
-Menu Items:           20
-Save Slots:           65 (5 per game)
-Daily Challenges:     11 unique
+Total Games:          19
+Total Achievements:   50
+Menu Items:           26
+Save Slots:           95 (5 per game)
+Daily Challenges:     23 unique
 Themes:               5 visual themes
-Lines of Code:        ~7,326
+Lines of Code:        ~12,000
 Features:             20+
 ```
 
@@ -44,6 +44,14 @@ Features:             20+
 
 ### Phase 3 Additions (v3.5)
 13. **Sudoku** - 9x9 number puzzle
+
+### Phase 4 Additions (v4.0)
+14. **Connect Four** - Four-in-a-row strategy
+15. **Battleship** - Naval combat game
+16. **Conway's Game of Life** - Cellular automaton
+17. **Asteroids** - Space shooter classic
+18. **Centipede** - Arcade bug shooter
+19. **Missile Command** - City defense
 
 ---
 

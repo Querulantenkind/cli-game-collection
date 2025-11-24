@@ -289,15 +289,117 @@ class AchievementManager:
             AchievementCategory.MASTERY, 25
         )
         
+        # Connect Four achievements
+        achievements['connect_four_win'] = Achievement(
+            'connect_four_win', 'Four in a Row', 'Win a game of Connect Four',
+            lambda s: s.get('game') == 'connect_four' and s.get('won', False),
+            AchievementCategory.FIRST, 15
+        )
+        achievements['connect_four_perfect'] = Achievement(
+            'connect_four_perfect', 'Quick Connect', 'Win Connect Four in under 10 moves',
+            lambda s: (s.get('game') == 'connect_four' and s.get('won', False) and
+                      s.get('moves', 99) < 10),
+            AchievementCategory.PERFECT, 30
+        )
+        achievements['connect_four_150'] = Achievement(
+            'connect_four_150', 'Connect Master', 'Score 150+ in Connect Four',
+            lambda s: s.get('game') == 'connect_four' and s.get('score', 0) >= 150,
+            AchievementCategory.SCORE, 25
+        )
+        
+        # Battleship achievements
+        achievements['battleship_win'] = Achievement(
+            'battleship_win', 'Fleet Commander', 'Win a game of Battleship',
+            lambda s: s.get('game') == 'battleship' and s.get('won', False),
+            AchievementCategory.FIRST, 20
+        )
+        achievements['battleship_perfect'] = Achievement(
+            'battleship_perfect', 'Perfect Aim', 'Win Battleship with 80%+ accuracy',
+            lambda s: (s.get('game') == 'battleship' and s.get('won', False) and
+                      s.get('accuracy', 0) >= 80),
+            AchievementCategory.PERFECT, 40
+        )
+        achievements['battleship_speed'] = Achievement(
+            'battleship_speed', 'Quick Victory', 'Win Battleship in under 30 shots',
+            lambda s: (s.get('game') == 'battleship' and s.get('won', False) and
+                      s.get('player_shots', 99) < 30),
+            AchievementCategory.SPEED, 35
+        )
+        
+        # Conway's Game of Life achievements
+        achievements['conway_1000gen'] = Achievement(
+            'conway_1000gen', 'Life Goes On', 'Run simulation for 1000 generations',
+            lambda s: s.get('game') == 'conway' and s.get('generation', 0) >= 1000,
+            AchievementCategory.MASTERY, 30
+        )
+        achievements['conway_100pop'] = Achievement(
+            'conway_100pop', 'Population Boom', 'Reach 100+ population',
+            lambda s: s.get('game') == 'conway' and s.get('max_population', 0) >= 100,
+            AchievementCategory.SCORE, 20
+        )
+        
+        # Asteroids achievements
+        achievements['asteroids_level_5'] = Achievement(
+            'asteroids_level_5', 'Asteroid Master', 'Reach level 5 in Asteroids',
+            lambda s: s.get('game') == 'asteroids' and s.get('level', 0) >= 5,
+            AchievementCategory.MASTERY, 25
+        )
+        achievements['asteroids_50'] = Achievement(
+            'asteroids_50', 'Space Ace', 'Destroy 50 asteroids',
+            lambda s: s.get('game') == 'asteroids' and s.get('asteroids_destroyed', 0) >= 50,
+            AchievementCategory.SCORE, 30
+        )
+        achievements['asteroids_500'] = Achievement(
+            'asteroids_500', 'High Scorer', 'Score 500+ in Asteroids',
+            lambda s: s.get('game') == 'asteroids' and s.get('score', 0) >= 500,
+            AchievementCategory.SCORE, 35
+        )
+        
+        # Centipede achievements
+        achievements['centipede_level_5'] = Achievement(
+            'centipede_level_5', 'Bug Hunter', 'Reach level 5 in Centipede',
+            lambda s: s.get('game') == 'centipede' and s.get('level', 0) >= 5,
+            AchievementCategory.MASTERY, 25
+        )
+        achievements['centipede_100seg'] = Achievement(
+            'centipede_100seg', 'Segment Destroyer', 'Destroy 100 centipede segments',
+            lambda s: s.get('game') == 'centipede' and s.get('segments_destroyed', 0) >= 100,
+            AchievementCategory.SCORE, 30
+        )
+        achievements['centipede_no_loss'] = Achievement(
+            'centipede_no_loss', 'Perfect Defense', 'Clear a level without losing a life',
+            lambda s: (s.get('game') == 'centipede' and s.get('level', 0) >= 2 and
+                      s.get('lives_remaining', 0) == 3),
+            AchievementCategory.PERFECT, 40
+        )
+        
+        # Missile Command achievements
+        achievements['missile_command_wave_10'] = Achievement(
+            'missile_command_wave_10', 'City Defender', 'Survive 10 waves in Missile Command',
+            lambda s: s.get('game') == 'missile_command' and s.get('wave', 0) >= 10,
+            AchievementCategory.MASTERY, 35
+        )
+        achievements['missile_command_all_cities'] = Achievement(
+            'missile_command_all_cities', 'Perfect Defense', 'Complete a wave with all cities intact',
+            lambda s: (s.get('game') == 'missile_command' and s.get('wave', 0) >= 2 and
+                      s.get('cities_alive', 0) == 6),
+            AchievementCategory.PERFECT, 40
+        )
+        achievements['missile_command_1000'] = Achievement(
+            'missile_command_1000', 'Commander Elite', 'Score 1000+ in Missile Command',
+            lambda s: s.get('game') == 'missile_command' and s.get('score', 0) >= 1000,
+            AchievementCategory.SCORE, 50
+        )
+        
         # Collection achievements (checked separately via stats)
         achievements['play_all'] = Achievement(
             'play_all', 'Game Explorer', 'Play all games at least once',
-            lambda s: s.get('games_played_count', 0) >= 13,  # Updated for new games
+            lambda s: s.get('games_played_count', 0) >= 19,  # Updated for new games
             AchievementCategory.COLLECTION, 50
         )
         achievements['win_all'] = Achievement(
             'win_all', 'Master Gamer', 'Win all games at least once',
-            lambda s: s.get('games_won_count', 0) >= 13,  # Updated for new games
+            lambda s: s.get('games_won_count', 0) >= 19,  # Updated for new games
             AchievementCategory.COLLECTION, 100
         )
         achievements['first_high_score'] = Achievement(

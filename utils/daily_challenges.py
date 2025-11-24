@@ -175,6 +175,62 @@ class DailyChallengeManager:
             'Complete a level of Breakout', ChallengeType.SPECIAL, 1, 20
         ))
         
+        # Connect Four challenges
+        challenges.append(Challenge(
+            'connect_four_win', 'connect_four', 'Connect Champion',
+            'Win a game of Connect Four', ChallengeType.SPECIAL, 1, 15
+        ))
+        challenges.append(Challenge(
+            'connect_four_150', 'connect_four', 'Connect Master',
+            'Score 150+ in Connect Four', ChallengeType.SCORE, 150, 20
+        ))
+        
+        # Battleship challenges
+        challenges.append(Challenge(
+            'battleship_win', 'battleship', 'Fleet Commander',
+            'Win a game of Battleship', ChallengeType.SPECIAL, 1, 20
+        ))
+        challenges.append(Challenge(
+            'battleship_perfect', 'battleship', 'Perfect Aim',
+            'Win Battleship with 75%+ accuracy', ChallengeType.SPECIAL, 75, 30
+        ))
+        
+        # Conway's Game of Life challenges
+        challenges.append(Challenge(
+            'conway_500gen', 'conway', 'Life Simulator',
+            'Run simulation for 500 generations', ChallengeType.SCORE, 500, 20
+        ))
+        
+        # Asteroids challenges
+        challenges.append(Challenge(
+            'asteroids_level_3', 'asteroids', 'Asteroid Hunter',
+            'Reach level 3 in Asteroids', ChallengeType.SPECIAL, 3, 20
+        ))
+        challenges.append(Challenge(
+            'asteroids_300', 'asteroids', 'Space Ace',
+            'Score 300+ in Asteroids', ChallengeType.SCORE, 300, 25
+        ))
+        
+        # Centipede challenges
+        challenges.append(Challenge(
+            'centipede_level_3', 'centipede', 'Bug Exterminator',
+            'Reach level 3 in Centipede', ChallengeType.SPECIAL, 3, 20
+        ))
+        challenges.append(Challenge(
+            'centipede_250', 'centipede', 'Centipede Master',
+            'Score 250+ in Centipede', ChallengeType.SCORE, 250, 25
+        ))
+        
+        # Missile Command challenges
+        challenges.append(Challenge(
+            'missile_command_wave_5', 'missile_command', 'City Defender',
+            'Survive 5 waves in Missile Command', ChallengeType.SPECIAL, 5, 25
+        ))
+        challenges.append(Challenge(
+            'missile_command_500', 'missile_command', 'Commander',
+            'Score 500+ in Missile Command', ChallengeType.SCORE, 500, 30
+        ))
+        
         return challenges
     
     def get_today_date(self) -> str:

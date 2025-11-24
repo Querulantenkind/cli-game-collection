@@ -15,6 +15,12 @@ from games.tictactoe import TicTacToeGame
 from games.wordle import WordleGame
 from games.frogger import FroggerGame
 from games.sudoku import SudokuGame
+from games.connect_four import ConnectFourGame
+from games.battleship import BattleshipGame
+from games.conway import ConwayGame
+from games.asteroids import Asteroids
+from games.centipede import CentipedeGame
+from games.missile_command import MissileCommandGame
 from games.settings_menu import SettingsMenu
 from games.help_menu import HelpMenu
 from games.statistics_menu import StatisticsMenu
@@ -41,6 +47,12 @@ class GameMenu:
             ("Wordle", self._run_wordle),
             ("Frogger", self._run_frogger),
             ("Sudoku", self._run_sudoku),
+            ("Connect Four", self._run_connect_four),
+            ("Battleship", self._run_battleship),
+            ("Conway's Game of Life", self._run_conway),
+            ("Asteroids", self._run_asteroids),
+            ("Centipede", self._run_centipede),
+            ("Missile Command", self._run_missile_command),
             ("Load Game", self._run_load_game),
             ("Settings", self._run_settings),
             ("Statistics", self._run_statistics),
@@ -116,6 +128,36 @@ class GameMenu:
         game = SudokuGame()
         game.run()
     
+    def _run_connect_four(self):
+        """Run the Connect Four game."""
+        game = ConnectFourGame()
+        game.run()
+    
+    def _run_battleship(self):
+        """Run the Battleship game."""
+        game = BattleshipGame()
+        game.run()
+    
+    def _run_conway(self):
+        """Run the Conway's Game of Life."""
+        game = ConwayGame()
+        game.run()
+    
+    def _run_asteroids(self):
+        """Run the Asteroids game."""
+        game = Asteroids()
+        game.run()
+    
+    def _run_centipede(self):
+        """Run the Centipede game."""
+        game = CentipedeGame()
+        game.run()
+    
+    def _run_missile_command(self):
+        """Run the Missile Command game."""
+        game = MissileCommandGame()
+        game.run()
+    
     def _run_load_game(self):
         """Run the load game menu."""
         load_menu = LoadMenu()
@@ -138,6 +180,12 @@ class GameMenu:
                 'wordle': WordleGame,
                 'frogger': FroggerGame,
                 'sudoku': SudokuGame,
+                'connect_four': ConnectFourGame,
+                'battleship': BattleshipGame,
+                'conway': ConwayGame,
+                'asteroids': Asteroids,
+                'centipede': CentipedeGame,
+                'missile_command': MissileCommandGame,
             }
             
             game_class = game_classes.get(game_name)

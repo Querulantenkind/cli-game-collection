@@ -17,6 +17,12 @@ A collection of classic games playable directly in your terminal! Built with Pyt
 - **Wordle** - Guess the 5-letter word in 6 tries! Programming/tech themed words.
 - **Frogger** - Cross the road and river! Avoid cars, ride logs, reach the goals.
 - **Sudoku** - Classic number puzzle! Fill the 9x9 grid with logic.
+- **Connect Four** - Drop pieces to get four in a row! Play against AI or a friend.
+- **Battleship** - Strategic naval combat. Place ships and sink the enemy fleet!
+- **Conway's Game of Life** - Watch cellular automaton patterns evolve and grow.
+- **Asteroids** - Classic space shooter. Destroy asteroids and survive!
+- **Centipede** - Shoot the descending centipede before it reaches you!
+- **Missile Command** - Defend your cities from incoming ballistic missiles!
 
 ## 🚀 Quick Start
 
@@ -178,7 +184,7 @@ No external dependencies required! 🎉
 
 ## ✨ Features
 
-### 🎮 Games (13)
+### 🎮 Games (19)
 - **Snake** - Classic endless growth game
 - **Tetris** - Block stacking puzzle
 - **Pac-Man** - Maze navigation with ghosts
@@ -192,10 +198,16 @@ No external dependencies required! 🎉
 - **Wordle** - 5-letter word guessing (tech themed)
 - **Frogger** - Lane-crossing challenge
 - **Sudoku** - Number placement puzzle
+- **Connect Four** - Four-in-a-row strategy game
+- **Battleship** - Naval combat and strategy
+- **Conway's Game of Life** - Cellular automaton simulation
+- **Asteroids** - Classic space shooter
+- **Centipede** - Arcade bug-shooting action
+- **Missile Command** - City defense game
 
 ### 🏆 Progression Systems
 - **High Scores** - Top 10 scores per game, automatically tracked
-- **Achievements** - 34 achievements across all games with point system
+- **Achievements** - 50 achievements across all games with point system
 - **Daily Challenges** - 3 rotating challenges daily with streak tracking
 - **Statistics** - Comprehensive tracking with graphs and trends
   - Win rates and streaks
